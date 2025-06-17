@@ -2,11 +2,18 @@ import logging
 from utils.helper import greet
 import yaml
 
-logging.basicConfig(
-    filename="/kaggle/working/log.txt",
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
+logger = logging.getLogger("my_logger")
+logger.setLevel(logging.INFO)
+
+
+fh = logging.FileHandler("/kaggle/working/log.txt")
+fh.setLevel(logging.INFO)
+
+
+formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+
+logger.addHandler(fh)
 
 with open("/kaggle/working/kaggle-module/config/config.yaml") as f:
     cfg = yaml.safe_load(f)
@@ -14,7 +21,8 @@ with open("/kaggle/working/kaggle-module/config/config.yaml") as f:
 name = cfg.get("name", "World")
 msg = greet(name)
 
-logging.info(f"Greeting message: {msg}")
+logger.info(f"Greeting message: {msg}")
+
 
 with open("/kaggle/working/output.txt", "w") as f:
     f.write(msg + "\n")
