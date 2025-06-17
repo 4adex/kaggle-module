@@ -8,7 +8,7 @@ logging.basicConfig(
     format="%(asctime)s - %(levelname)s - %(message)s"
 )
 
-with open("./config/config.yaml") as f:
+with open("/kaggle/working/kaggle-module/config/config.yaml") as f:
     cfg = yaml.safe_load(f)
 
 name = cfg.get("name", "World")
